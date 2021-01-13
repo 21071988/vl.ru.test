@@ -1,7 +1,15 @@
 <template>
+<div class="tasks__wrapper">
+  <input 
+    type="text"
+    class='search'
+    placeholder="text here"
+    v-model="search">
+
   <div class="tasks">
-    <task v-for="task in tasks" :key="task.id" :name="task.name" :date="task.date" :priority="task.priority" :tag="task.tag"/>
+    <task v-for="task in searchHandler" :key="task.id" :name="task.name" :date="task.date" :priority="task.priority" :tag="task.tag"/>
   </div>
+</div>
 </template>
 
 <script>
@@ -14,8 +22,16 @@ export default {
   },
   data() {
     return {
-      tasks: null
+      tasks: [],
+      search:'',
     };
+  },
+  computed:{
+    searchHandler(){
+      return this.tasks.filter(elem=>{
+        return elem.name.toLowerCase().includes(this.search)
+      })
+    }
   },
   mounted() {
     axios
@@ -29,11 +45,22 @@ export default {
 <style lang="less" scoped>
 @import '~@/assets/css/styles.less';
 .tasks{
-  background: #848484;
+  background:@mc2;
   display:grid;
-  grid-template-columns: repeat(2, minmax(30vw,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap:@m;
   padding:@m;
   .b5;
+}
+.search{
+      min-height: 40px;
+    width: 50%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    outline: none;
+    border:1px solid @mc2;
+    padding-left:10px;
+    .uppercase;
+    .bold;
 }
 </style>
