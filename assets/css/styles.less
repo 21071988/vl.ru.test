@@ -1,5 +1,8 @@
 @mc2:#d2ebfb;
+@mch:#bce3fb;
 @hc:#848484;
+@blue:#6895ff;
+@blue2:#2264ff;
 @m: 20px;
 @m1:10px;
 @m2: 40px;
@@ -15,6 +18,10 @@
 }
 b{
   .thefontbold;
+}
+a{
+  color:#000000;
+  text-decoration: none;
 }
 .hc {
   color: @hc;
@@ -58,4 +65,17 @@ b{
 }
 .trans4 {
   transition: 0.4s;
+}
+.edit{
+  height: 35px;
+    padding: 0 15px;
+    border-radius: 5px;
+    border: 0;
+    background: #8ab8f3;
+    color: #ffffff;
+    .trans4;
+    &:hover{
+      cursor:pointer;
+      background:#2482fb;
+    }
 }

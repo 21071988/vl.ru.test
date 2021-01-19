@@ -5,9 +5,8 @@
     class='search'
     placeholder="text here"
     v-model="search">
-
   <div class="tasks">
-    <task v-for="task in searchHandler" :key="task.id" :name="task.name" :date="task.date" :priority="task.priority" :tag="task.tag"/>
+    <task v-for="task in searchHandler" :key="task.id" :id="task.id" :name="task.name" :date="task.date" :priority="task.priority" :tag="task.tag"/>
   </div>
 </div>
 </template>
@@ -24,10 +23,12 @@ export default {
     return {
       tasks: [],
       search:'',
+      priority:''
     };
   },
+
   computed:{
-    searchHandler(){
+   searchHandler(){
       return this.tasks.filter(elem=>{
         return elem.name.toLowerCase().includes(this.search)
       })
