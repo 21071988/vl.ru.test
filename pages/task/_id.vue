@@ -1,17 +1,19 @@
 <template>
 <div class='wrapper'>
-  {{this.id}}
   <router-link to='/' class='back'><svg class='back__arrow' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.58 13.19"><g id="Слой_2" data-name="Слой 2"><g id="Слой_1-2" data-name="Слой 1"><line class="cls-1" x1="0.65" y1="6.83" x2="17.58" y2="6.83"/><polyline class="cls-1" points="6.7 0.34 0.69 6.83 6.42 12.84"/></g></g></svg><span>На главную</span></router-link>
   <div class='task__wrapper'>
     <div class='task'>
       <input type="hidden" v-model='task.id'>
           <input @click='showEdit = true' type="text" v-model='task.name'>
           <div class='grey'><span>Создано</span><span>{{task.date}}</span></div>
-          <div><span>Приоритет:</span><input @click='showEdit = true' type='text' v-model='task.priority'></div>
-          <div><span>Отметки:</span><input @click='showEdit = true' type="text" v-model='task.tag'></div>
+          <div class='flex-line'><span>Приоритет:</span><input @click='showEdit = true' type='text' v-model='task.priority'></div>
+          <div class='flex-line'><span>Отметки:</span><input @click='showEdit = true' type="text" v-model='task.tag'></div>
           <button class='edit__btn' v-if='showEdit' @click='uploadTask'>Обновить данные</button>
       </div>      
+  <p id='tip1'>*Чтобы обновить данные просто начните редактировать текст</p>
   </div>
+
+  
 </div>
 </template>
 
@@ -37,11 +39,26 @@ export default {
             }
           })
         .then(response => console.log('success item'))
-    }
+    },
+    showTip1(){
+      let tip1 = document.getElementById('tip1');
+      let tipShown = localStorage.getItem('tipShown');
+      if(tipShown !=1){
+        setTimeout(()=>tip1.classList.add('showTip'),1000);
+        setTimeout(()=>tip1.style.display = 'none',5000);
+        localStorage.setItem('tipShown','1');
+      }
+      
+
+       
+    },
+    
   },
   created(){
     this.$store.dispatch('getTasks');
-    
+  },
+  mounted(){
+    this.showTip1(); 
   },
   computed:{
     task() {
@@ -54,6 +71,21 @@ export default {
 
 <style lang="less" scoped>
 @import '~@/assets/css/styles.less';
+.showTip{
+  animation: showTip 2s forwards ease-in;
+}
+@keyframes showTip{
+  from{
+    opacity:0;
+  }
+  to{
+    opacity:1;
+  }
+}
+.flex-line{
+  .flex;
+  align-items:baseline;
+}
 .back__arrow{
   width: 20px;
   margin-right: 10px;
@@ -70,12 +102,14 @@ export default {
 }
   .task__wrapper{
     margin-top:@m2;
+    // .flex;
   }
   .wrapper{
     padding:@m3;
   }
   .edit__btn{
-        height: 40px;
+    height: 40px;
+    min-width: 170px;
     width: 40%;
     border: none;
     border-radius: 5px;
@@ -102,7 +136,12 @@ export default {
       color:@mch;
     }
   }
+  #tip1{
+    .uppercase;
+    opacity:0;
+  }
   .task{
+    margin-bottom:@m2;
     width: 50%;
     height: 40%;
     padding:@m;
@@ -122,7 +161,7 @@ export default {
       .bold;
       padding:0;
       margin-bottom:@m;
-      width: fit-content;
+      width: 80%;
     }
     h2{
       margin-bottom:@m;

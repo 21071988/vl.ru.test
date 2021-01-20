@@ -1,7 +1,6 @@
 <template>
     <div class='task'>
       <router-link :to='openTask'>
-        {{id}}
         <h2>{{name}}</h2>
         <div class='grey'><span>Создано</span><span>{{date}}</span></div>
         <div><span>Приоритет:</span><span>{{priority}}</span></div>

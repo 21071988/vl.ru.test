@@ -8,7 +8,7 @@ Vue.use(Vuex)
 const store = () =>
   new Vuex.Store({
     state: {
-      tasks:[]
+      tasks:[],
     },
     mutations:{
       SET_TASKS(state, tasks) {
